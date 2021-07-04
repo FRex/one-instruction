@@ -1,0 +1,11 @@
+jmp label
+
+label1:
+jmp +2
+jmp +2
+jmp -1
+nop
+jmp +2
+
+label:
+subleq 0 0 0 label1

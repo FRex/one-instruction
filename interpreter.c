@@ -4,6 +4,7 @@
 typedef uint64_t u64;
 
 #define SLOT_BITS 8
+
 #define SLOT_MASK ((1 << SLOT_BITS) - 1)
 
 #define HARDWIRED_BITS 2
@@ -37,9 +38,10 @@ int main(int argc, char ** argv)
     (void)argv;
 
     const u64 code[] = {
-        encode(HARDWIRED_SLOT_POT1, HARDWIRED_SLOT_ZERO, HARDWIRED_SLOT_ZERO, 0u),
-        encode(HARDWIRED_SLOT_ZERO, HARDWIRED_SLOT_ZERO, HARDWIRED_SLOT_ZERO, 0u),
+        #include "raw.txt"
     };
+
+    const int inscount = sizeof(code) / sizeof(code[0]);
 
     int slots[1 << SLOT_BITS] = { 0 };
     slots[adjustSlotNumber(HARDWIRED_SLOT_ZERO)] = 0;
@@ -76,6 +78,9 @@ int main(int argc, char ** argv)
         {
             ++pc;
         }
+
+        if(pc >= inscount)
+            break;
     } /* while 1 */
 
     return 0;
